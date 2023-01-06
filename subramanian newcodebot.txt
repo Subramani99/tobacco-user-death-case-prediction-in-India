@@ -1,0 +1,27 @@
+import pandas as pd
+df  = pd.read_csv('C:\\Users\\Hi\\Downloads\\smoking-death-rate-1990-2017.csv')
+df.head()
+df.describe()
+df.isnull().sum()
+df['Deaths - Cause: All causes - Risk: Smoking - Sex: Both - Age: Age-standardized (Rate)'] =df['Deaths - Cause: All causes - Risk: Smoking - Sex: Both - Age: Age-standardized (Rate)'].fillna(df['Deaths - Cause: All causes - Risk: Smoking - Sex: Both - Age: Age-standardized (Rate)'].mean())
+df['Deaths - Cause: All causes - Risk: Smoking - Sex: Both - Age: Age-standardized (Rate).1'] = df['Deaths - Cause: All causes - Risk: Smoking - Sex: Both - Age: Age-standardized (Rate).1'].fillna(df['Deaths - Cause: All causes - Risk: Smoking - Sex: Both - Age: Age-standardized (Rate).1'].mean())
+df['Continent'] = df['Continent'].fillna(df['Continent'].mean())
+print(df.duplicated().sum())
+import matplotlib.pyplot as plt
+plt.boxplot(df['Deaths - Cause: All causes - Risk: Smoking - Sex: Both - Age: Age-standardized (Rate).1'])
+plt.hist(df['Deaths - Cause: All causes - Risk: Smoking - Sex: Both - Age: Age-standardized (Rate)'])
+x = df.iloc[:,[1,2,3,6]]
+y = df.iloc[:,4]
+x.head(3)
+from sklearn.model_selection import train_test_split
+x_train,x_test,y_train,y_test = train_test_split(x,y,test_size=0.2,random_state=42)
+print(x_train.shape)
+print(x_test.shape)
+print(y_train.shape)
+print(y_test.shape)
+from sklearn.linear_model import LogisticRegression
+models = LogisticRegression()
+from sklearn.ensemble import RandomForestRegressor
+model = RandomForestRegressor()
+model = model.fit(x,y)
+print(model)
